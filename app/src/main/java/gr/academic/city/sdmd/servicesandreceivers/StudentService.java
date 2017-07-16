@@ -37,12 +37,11 @@ public class StudentService extends IntentService {
     public static final String EXTRA_STUDENTS_RESULT = "students.result";
 
     private static final String GET_STUDENTS_URL = "http://10.0.2.2:3000/issues.json";
-    private static final String CREATE_STUDENTS_URL = "http://students-sdmdcity.rhcloud.com/rest/students";
+    private static final String CREATE_STUDENTS_URL = "http://10.0.2.2:3000/issues.json";
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
-     * @param name Used to name the worker thread, important only for debugging.
      */
     public StudentService() {
         super("Student Service");
@@ -72,17 +71,29 @@ public class StudentService extends IntentService {
             conn.setDoOutput(true);
 
             conn.addRequestProperty("Content-Type", "application/json");
+            conn.addRequestProperty("X-Redmine-API-Key","6e78ba4d9ab9ec7e1b028d5d3e6e58a80e501cf4");
 
             String firstName = intent.getStringExtra(EXTRA_FIRST_NAME);
             String lastName = intent.getStringExtra(EXTRA_LAST_NAME);
             String age = intent.getStringExtra(EXTRA_AGE);
 
-            Student student = new Student();
-            student.setFirstName(firstName);
-            student.setLastName(lastName);
-            student.setAge(age);
+//            Student student = new Student();
+//            student.setFirstName(firstName);
+//            student.setLastName(lastName);
+//            student.setAge(age);
 
-            String studentJson = new Gson().toJson(student);
+            IssueToSend issue = new IssueToSend();
+            issue.setProject_id(1L);
+            issue.setTracker_id(1L);
+            issue.setStatus_id(1L);
+            issue.setEstimated_hours(8L);
+            issue.setDescription(firstName);
+            issue.setSubject(lastName);
+
+            MasterIssueToSend missue = new MasterIssueToSend();
+            missue.setIssue(issue);
+
+            String studentJson = new Gson().toJson(missue);
 
             Log.d(LOG_TAG, studentJson);
 

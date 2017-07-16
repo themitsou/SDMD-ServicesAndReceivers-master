@@ -33,8 +33,10 @@
     <Button android:id="@+id/btn_insert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_age"
-        android:text="@string/insert" />
+        android:text="@string/insert"
+        android:layout_below="@+id/txt_age"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button android:id="@+id/btn_query"
         android:layout_width="match_parent"
